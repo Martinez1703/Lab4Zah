@@ -54,7 +54,7 @@ namespace LabaKg3
         private void DrawFigureAndStaticAxes()
         {
             ClearDrawing(); // Очищаем поле
-            /* DrawStaticAxes();*/ // Рисуем статичные оси поверх фигуры
+            DrawStaticAxes(); // Рисуем статичные оси поверх фигуры
         }
         private void ClearDrawing()
         {
@@ -68,13 +68,6 @@ namespace LabaKg3
         }
         private void Init_kvadrat()
         {
-            //Матрица имеет размер 8×4(8 вершин, по 4 координаты на каждую):
-            //Первый индекс[i, ] -номер вершины(0-7)
-            //Второй индекс[, j] -координаты:
-            //j=0 - координата X
-            //j = 1 - координата Y
-            //j = 2 - координата Z
-            //j = 3 - однородная координата(всегда 1)
 
             kv[0, 0] = 0; kv[0, 1] = 0; kv[0, 2] = 0; kv[0, 3] = 1;
             kv[1, 0] = 100; kv[1, 1] = 0; kv[1, 2] = 0; kv[1, 3] = 1;
@@ -133,23 +126,6 @@ namespace LabaKg3
             osi[2, 0] = 0; osi[2, 1] = 200; osi[2, 2] = 1;
             osi[3, 0] = 0; osi[3, 1] = -200; osi[3, 2] = 1;
         }
-        // Метод для умножения матриц 4x4
-        private double[,] MultiplyMatrices(double[,] a, double[,] b)
-        {
-            double[,] result = new double[4, 4];
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    result[i, j] = 0;
-                    for (int k = 0; k < 4; k++)
-                    {
-                        result[i, j] += a[i, k] * b[k, j];
-                    }
-                }
-            }
-            return result;
-        }
         private float[,] Multiply_matr(float[,] a, float[,] b)
         {
             int n = a.GetLength(0);
@@ -178,27 +154,11 @@ namespace LabaKg3
             l = pictureBox1.Height / 2;
             Draw_Kv();
         }
-        //private void Draw_osi()
-        //{
-        //    Init_osi();
-        //    Init_matr_preob(k, l);
-        //    int[,] osi1 = Multiply_matr(osi, matr_sdv);
-
-        //    Pen myPen = new Pen(Color.Red, 1);
-        //    Graphics g = Graphics.FromHwnd(pictureBox1.Handle);
-
-        //    g.DrawLine(myPen, osi1[0, 0], osi1[0, 1], osi1[1, 0], osi1[1, 1]);
-        //    g.DrawLine(myPen, osi1[2, 0], osi1[2, 1], osi1[3, 0], osi1[3, 1]);
-
-        //    g.Dispose();
-        //    myPen.Dispose();
-        //}
-        //Отрисовкка осей
         private void button1_Click(object sender, EventArgs e)
         {
             k = pictureBox1.Width / 2;
             l = pictureBox1.Height / 2;
-            //Draw_osi();
+            DrawStaticAxes();
         }
         //Таемер для сдвига
         private void button8_Click(object sender, EventArgs e)
@@ -313,42 +273,6 @@ namespace LabaKg3
                 }
             }
         }
-
-        //private void DrawFigureWithCurrentState()
-        //{
-        //    ClearDrawing();
-        //    //DrawStaticAxes();
-
-        //    // Применяем текущий сдвиг
-        //    float[,] kv1 = new float[8, 4];
-        //    for (int i = 0; i < 8; i++)
-        //    {
-        //        kv1[i, 0] = kv[i, 0] + k;
-        //        kv1[i, 1] = kv[i, 1] + l;
-        //        kv1[i, 2] = 1;
-        //    }
-
-        //    Pen myPen = new Pen(Color.Blue, 2);
-        //    Graphics g = Graphics.FromHwnd(pictureBox1.Handle);
-        //    g.DrawLine(myPen, kv1[0, 0], kv1[0, 1], kv1[1, 0], kv1[1, 1]);
-        //    g.DrawLine(myPen, kv1[1, 0], kv1[1, 1], kv1[2, 0], kv1[2, 1]);
-        //    g.DrawLine(myPen, kv1[2, 0], kv1[2, 1], kv1[3, 0], kv1[3, 1]);
-        //    g.DrawLine(myPen, kv1[3, 0], kv1[3, 1], kv1[0, 0], kv1[0, 1]);
-        //    //верхняя грань
-        //    g.DrawLine(myPen, kv1[4, 0], kv1[4, 1], kv1[5, 0], kv1[5, 1]);
-        //    g.DrawLine(myPen, kv1[5, 0], kv1[5, 1], kv1[6, 0], kv1[6, 1]);
-        //    g.DrawLine(myPen, kv1[6, 0], kv1[6, 1], kv1[7, 0], kv1[7, 1]);
-        //    g.DrawLine(myPen, kv1[7, 0], kv1[7, 1], kv1[4, 0], kv1[4, 1]);
-        //    //ребра
-        //    g.DrawLine(myPen, kv1[0, 0], kv1[0, 1], kv1[7, 0], kv1[7, 1]);
-        //    g.DrawLine(myPen, kv1[1, 0], kv1[1, 1], kv1[6, 0], kv1[6, 1]);
-        //    g.DrawLine(myPen, kv1[2, 0], kv1[2, 1], kv1[5, 0], kv1[5, 1]);
-        //    g.DrawLine(myPen, kv1[3, 0], kv1[3, 1], kv1[4, 0], kv1[4, 1]);
-        //    g.Dispose();
-        //    myPen.Dispose();
-        //}
-
-
         //Поворот фигуры
         private void button10_Click(object sender, EventArgs e)
         {
@@ -357,56 +281,158 @@ namespace LabaKg3
                 MessageBox.Show("Введите число");
                 return;
             }
-
-            DrawFigureAndStaticAxes();
-
-            // Увеличиваем угол поворота на введенное значение (циклически)
-            rotationAngle = (rotationAngle + userAngle) % 360;
-
-            // Преобразуем угол в радианы для математических функций
-            double angleInRadians = rotationAngle * Math.PI / 180;
-
-            // Создаем матрицу поворота вокруг оси X (можно изменить на Y или Z при необходимости)
-            double cosA = Math.Cos(angleInRadians);
-            double sinA = Math.Sin(angleInRadians);
-
-            double[,] rotationMatrixX = new double[4, 4]
+            if (radioButton1.Checked)
             {
+                DrawFigureAndStaticAxes();
+
+                // Увеличиваем угол поворота на введенное значение (циклически)
+                rotationAngle = (rotationAngle + userAngle) % 360;
+
+                // Преобразуем угол в радианы для математических функций
+                double angleInRadians = rotationAngle * Math.PI / 180;
+
+                // Создаем матрицу поворота вокруг оси X (можно изменить на Y или Z при необходимости)
+                double cosA = Math.Cos(angleInRadians);
+                double sinA = Math.Sin(angleInRadians);
+
+                double[,] rotationMatrixX = new double[4, 4]
+                {
                 { 1, 0, 0, 0 },
                 { 0, cosA, sinA, 0 },
                 { 0, -sinA, cosA, 0 },
                 { 0, 0, 0, 1 }
-            };
+                };
 
-            // Временный массив для хранения повернутых координат (double)
-            double[,] temp = new double[8, 4];
+                // Временный массив для хранения повернутых координат (double)
+                double[,] temp = new double[8, 4];
 
-            // Применяем поворот к каждой вершине
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 4; j++)
+                // Применяем поворот к каждой вершине
+                for (int i = 0; i < 8; i++)
                 {
-                    temp[i, j] = 0;
-                    for (int k = 0; k < 4; k++)
+                    for (int j = 0; j < 4; j++)
                     {
-                        temp[i, j] += kv[i, k] * rotationMatrixX[k, j];
+                        temp[i, j] = 0;
+                        for (int k = 0; k < 4; k++)
+                        {
+                            temp[i, j] += kv[i, k] * rotationMatrixX[k, j];
+                        }
                     }
                 }
+                // Обновляем текущие координаты фигуры
+                for (int i = 0; i < 8; i++)
+                {
+                    kv[i, 0] = (float)temp[i, 0];
+                    kv[i, 1] = (float)temp[i, 1];
+                    kv[i, 2] = (float)temp[i, 2];
+                    kv[i, 3] = (float)temp[i, 3];
+                }
+            }
+            if (radioButton2.Checked)
+            {
+                DrawFigureAndStaticAxes();
+
+                // Увеличиваем угол поворота на введенное значение (циклически)
+                rotationAngle = (rotationAngle + userAngle) % 360;
+
+                // Преобразуем угол в радианы для математических функций
+                double angleInRadians = rotationAngle * Math.PI / 180;
+
+                // Создаем матрицу поворота вокруг оси X (можно изменить на Y или Z при необходимости)
+                double cosA = Math.Cos(angleInRadians);
+                double sinA = Math.Sin(angleInRadians);
+
+                double[,] rotationMatrixX = new double[4, 4]
+                {
+                { cosA, sinA, 0, 0 },
+                { -sinA, cosA, 0, 0 },
+                { 0, 0,1, 0 },
+                { 0, 0, 0, 1 }
+                };
+
+                // Временный массив для хранения повернутых координат (double)
+                double[,] temp = new double[8, 4];
+
+                // Применяем поворот к каждой вершине
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        temp[i, j] = 0;
+                        for (int k = 0; k < 4; k++)
+                        {
+                            temp[i, j] += kv[i, k] * rotationMatrixX[k, j];
+                        }
+                    }
+                }
+                // Обновляем текущие координаты фигуры
+                for (int i = 0; i < 8; i++)
+                {
+                    kv[i, 0] = (float)temp[i, 0];
+                    kv[i, 1] = (float)temp[i, 1];
+                    kv[i, 2] = (float)temp[i, 2];
+                    kv[i, 3] = (float)temp[i, 3];
+                }
+            }
+            if (radioButton3.Checked)
+            {
+                DrawFigureAndStaticAxes();
+
+                // Увеличиваем угол поворота на введенное значение (циклически)
+                rotationAngle = (rotationAngle + userAngle) % 360;
+
+                // Преобразуем угол в радианы для математических функций
+                double angleInRadians = rotationAngle * Math.PI / 180;
+
+                // Создаем матрицу поворота вокруг оси X (можно изменить на Y или Z при необходимости)
+                double cosA = Math.Cos(angleInRadians);
+                double sinA = Math.Sin(angleInRadians);
+
+                double[,] rotationMatrixX = new double[4, 4]
+                {
+                { cosA, 0, -sinA, 0 },
+                { 0, 1, 0, 0 },
+                { sinA, 0,cosA, 0 },
+                { 0, 0, 0, 1 }
+                };
+
+                // Временный массив для хранения повернутых координат (double)
+                double[,] temp = new double[8, 4];
+
+                // Применяем поворот к каждой вершине
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        temp[i, j] = 0;
+                        for (int k = 0; k < 4; k++)
+                        {
+                            temp[i, j] += kv[i, k] * rotationMatrixX[k, j];
+                        }
+                    }
+                }
+                // Обновляем текущие координаты фигуры
+                for (int i = 0; i < 8; i++)
+                {
+                    kv[i, 0] = (float)temp[i, 0];
+                    kv[i, 1] = (float)temp[i, 1];
+                    kv[i, 2] = (float)temp[i, 2];
+                    kv[i, 3] = (float)temp[i, 3];
+                }
+            }
+            if ((radioButton1.Checked == false) && (radioButton2.Checked == false) && (radioButton3.Checked == false))
+            {
+                MessageBox.Show("Выберите ось поворота");
+            }
+            else
+            {
+                Draw_Kv();
             }
 
-            // Обновляем текущие координаты фигуры
-            for (int i = 0; i < 8; i++)
-            {
-                kv[i, 0] = (float)temp[i, 0];
-                kv[i, 1] = (float)temp[i, 1];
-                kv[i, 2] = (float)temp[i, 2];
-                kv[i, 3] = (float)temp[i, 3];
-            }
 
             // Отрисовка повернутой фигуры с учетом текущего сдвига
-            Draw_Kv();
 
-            
+
+
         }
 
 
@@ -509,32 +535,5 @@ namespace LabaKg3
             ResetFigure(); // Возвращаем фигуру в исходное положение и центр
         }
         //создание матрицы для поворота на угол (вокруг оси X)
-        private double[,] CreateRotationMatrix(double angle)
-        {
-            double cosA = Math.Cos(angle);
-            double sinA = Math.Sin(angle);
-
-            return new double[4, 4]
-            {
-                { 1, 0, 0, 0 },
-                { 0, cosA, sinA, 0 },
-                { 0, -sinA, cosA, 0 },
-                { 0, 0, 0, 1 }
-            };
-        }
-
-        private double[,] CreateRotationMatrix2(double angle) // Поворот вокруг оси Y
-        {
-            double cosA = Math.Cos(angle);
-            double sinA = Math.Sin(angle);
-
-            return new double[4, 4]
-            {
-                { cosA, 0, -sinA, 0 },
-                { 0, 1, 0, 0 },
-                { sinA, 0, cosA, 0 },
-                { 0, 0, 0, 1 }
-            };
-        }
     }
 }
